@@ -8,6 +8,7 @@ router.get("/", (req, res) => {
 
 router.get("/login", (req, res) => {
   res.render("template/login", { title: "Connexion" });
+  1;
 });
 
 router.get("/dashboard", (req, res) => {

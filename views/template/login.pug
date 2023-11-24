@@ -32,13 +32,13 @@ block content
             e.preventDefault()
             let isError = false
           
-            if(!inputPassword.value.match(/^[A-Za-zÀ-ÖØ-öø-ÿ\s-]+$/)){
+            if(!inputPassword.value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)){
             pwdErr.innerHTML ="Mot de passe non conforme"
                 isError = true
             }else{
                 pwdErr.innerHTML =''
             }
-             if(!inputEmail.value.match(/^[A-Za-zÀ-ÖØ-öø-ÿ\s-]+$/)){
+             if(!inputEmail.value.match(/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/)){
                 emailErr.innerHTML ="Veuillez saisir une adresse mail valide"
                 isError = true
             }else{
