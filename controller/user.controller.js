@@ -3,7 +3,7 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-dotenv.config;
+dotenv.config();
 const login = async (req, res) => {
   const { email, password } = req.body;
   const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);

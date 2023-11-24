@@ -8,7 +8,6 @@ const getFlash = (req) => {
 
 const loginRender = async (req, res) => {
   const flash = getFlash(req);
-
   res.render("template/login", {
     title: "Connexion",
     flash,
@@ -17,8 +16,7 @@ const loginRender = async (req, res) => {
 
 const dashboardRender = async (req, res) => {
   const flash = getFlash(req);
-
-  res.render("template/dashboard", { title: "Dashboard", flash });
+  res.render("template/dashboard", { title: "Dashboard", flash, username: req.session.user.firstName });
 };
 
 const registerRender = async (req, res) => {
