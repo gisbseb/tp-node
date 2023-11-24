@@ -4,7 +4,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const login = async (req, res) => { };
+const login = async (req, res) => { 
+    console.log(req.body)
+    const { email, password } = req.body;
+    const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
+    const hashedPwd = sha256Hasher.update(password).digest("hex");
+
+    let existingUser = await User.findOne({ email, password: hashedPwd });
+    if (!existingUser) {
+        return res.status(401).send({
+            message: "Invalid credentials"
+        });
+    }
+
+    return res.redirect("/dashboard");
+};
 const find = async (req, res) => {
     try {
         const users = await User.find();
@@ -18,6 +32,14 @@ const find = async (req, res) => {
 const create = async (req, res) => {
     try {
         const { email, password, lastName, firstName } = req.body;
+
+        let existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).send({
+                message: "User already exists"
+            });
+        }
+
         const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
         const hashedPwd = sha256Hasher.update(password).digest("hex");
         await User.create({
