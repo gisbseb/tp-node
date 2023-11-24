@@ -27,8 +27,6 @@ const create = async (req, res) => {
             firstName,
         });
 
-        const foundUser = await User.findOne();
-
         res.redirect("/login");
     } catch (err) {
         res.status(500).send({
