@@ -100,6 +100,10 @@ ul {
 li {
   position: relative;
 }
+li.active {
+  opacity: 0.2;
+  pointer-events: none;
+}
 li:hover {
 }
 li:before {

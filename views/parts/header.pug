@@ -1,23 +1,5 @@
-<<<<<<< HEAD
 header
     nav
         ul 
-            a(href="/connexion")
-                li Connexion
-            a(href="/")
-                li Inscription
-                
-=======
-header 
-    nav.navbar.navbar-expand-lg.bg-body-tertiary
-        div.container-fluid
-            a.navbar-brand(href='#') Navbar
-            button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-                span.navbar-toggler-icon
-            div.collapse.navbar-collapse
-                ul.navbar-nav
-                    li.nav-item
-                        a.nav-link.active(aria-current='page', href='#') Inscription
-                    li.nav-item
-                        a.nav-link.active(aria-current='page', href='#') Connexion
->>>>>>> 25576c3c5510fbb1b10bca2e9fb2ad6a8ae71532
+            +menuItem('Inscription', '/')
+            +menuItem('Connexion', '/login')
