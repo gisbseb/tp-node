@@ -9,5 +9,6 @@ export default function (app) {
   router.post("/login", controller.authenticate);
   router.get("/dashboard", controller.renderDashboard);
   router.get("/logout", controller.logout);
+
   app.use("/", router);
 }

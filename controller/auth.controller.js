@@ -20,8 +20,8 @@ const register = async (req, res) => {
   const { email, password, lastName, firstName } = req.body;
 
   const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
-
   const hashedPwd = sha256Hasher.update(password).digest("hex");
+  console.log(hashedPwd);
   await User.create({
     email,
     password: hashedPwd,
@@ -30,7 +30,7 @@ const register = async (req, res) => {
   });
 
   const foundUser = await User.findOne({}, {});
-
+  console.log(foundUser);
   res.redirect("/connexion");
 };
 
