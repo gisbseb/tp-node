@@ -35,9 +35,11 @@ const create = async (req, res) => {
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).send({
-        message: "User already exists",
-      });
+      req.session.flash = {
+        class: "failed",
+        message: "l'utilisateur existe déja",
+      };
+      return res.redirect("/");
     }
 
     const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
