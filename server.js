@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import { join } from "node:path";
-import authRoute from "./routes/auth.routes.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
