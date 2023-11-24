@@ -4,10 +4,9 @@ import { join } from "node:path";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import session from "express-session";
 
 dotenv.config();
-const { PORT, HOST } = process.env;
+const { PORT, HOST, SESSION_SECRET } = process.env;
 
 const app = express();
 const cwd = process.cwd();
@@ -16,13 +15,6 @@ app.set("view engine", "pug");
 const staticPath = join(cwd, "public");
 app.use(express.static(staticPath));
 app.use(express.urlencoded({ extended: false }));
-
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false
-}))
-
 // app.get("/", (req, res) => {
 //   return res.json({
 //     message: "Welcome.",
