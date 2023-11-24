@@ -1,3 +1,7 @@
+mixin menuItem(name, href)
+    li(class=(title === name) ? "active link" : "link")
+        a(href=href) #{name}
+
 html(lang=fr)
     head
         meta(charset="utf-8")
@@ -10,5 +14,18 @@ html(lang=fr)
         block header
         block content
 
+    if flash
+        div#flash-container
+            div#flash-message(class=`${flash.class}`)
+                p #{flash.message}
+  
+    script.
+        let flash = document.querySelector('#flash-message')
+        if(flash){
+            setTimeout(() =>{
+                flash.parentNode.removeChild(flash);
+            },5000)
+        }
+
     footer 
-        p mon footer
+        p footer

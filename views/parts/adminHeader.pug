@@ -1,7 +1,6 @@
 header 
     nav
         ul 
-            a(href="/dashboard")
-                li dashboard
-            a(href="/logout")
-                li deconnexion
+            +menuItem('Dashboard', '/dashboard')
+            +menuItem('Deconnexion', '/logout')
+                
