@@ -49,6 +49,7 @@ app.delete("*", (req, res, next) => {
     next();
 });
 
+
 //Importe toutes les routes du dossier routes
 const routePath = path.join(
     path.dirname(fileURLToPath(import.meta.url)),
@@ -59,6 +60,11 @@ fs.readdirSync(routePath).forEach((file) => {
     import(`./routes/${file}`).then((module) => {
         module.default(app);
     });
+});
+
+//404
+app.get("*", (req, res) => {
+    return res.render("template/404", { title: "404" });
 });
 
 app.listen(PORT, () => {

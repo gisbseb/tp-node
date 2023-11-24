@@ -8,6 +8,10 @@ export default function (app) {
     router.get('/login', controller.loginRender)
     router.get('/dashboard', [auth.verifyToken], controller.dashboardRender)
     router.get('/', controller.registerRender)
+    router.get('/logout', (req, res) => {
+        req.session.destroy()
+        res.redirect('/login')
+    })
 
     app.use('/', router);
 }
