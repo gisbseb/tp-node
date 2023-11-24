@@ -1,0 +1,20 @@
+extend ../layout/layout
+
+block header
+    include  ../parts/header.pug
+
+block content 
+
+    div.form-container
+        h1 Connexion
+        form(action="/login" method="post")
+        
+            div.form-group
+                label(for="email") Email :
+                input(type="text" id="email" name="email" )
+            
+            div.form-group
+                label(for="password") Mot de passe :
+                input(type="password" id="password" name="password" )
+            
+            input(type="submit" value="Envoyer" class="custom-btn")
