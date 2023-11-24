@@ -6,7 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import session from "express-session";
 dotenv.config();
-const { PORT, HOST, SESSION_SECRET } = process.env;
+const { PORT, HOST, JWT_SECRET } = process.env;
 
 const app = express();
 const cwd = process.cwd();
@@ -15,14 +15,15 @@ app.set("view engine", "pug");
 const staticPath = join(cwd, "public");
 app.use(express.static(staticPath));
 app.use(express.urlencoded({ extended: false }));
+
 app.use(
   session({
-    name: "name",
-    secret: "mySecret",
+    secret: JWT_SECRET,
     resave: false,
     saveUninitialized: false,
   })
 );
+
 app.get("*", (req, res, next) => {
   console.log("GET " + req.url);
   next();
@@ -42,6 +43,7 @@ app.delete("*", (req, res, next) => {
   console.log("DELETE " + req.url);
   next();
 });
+
 
 //Importe toutes les routes du dossier routes
 const routePath = path.join(

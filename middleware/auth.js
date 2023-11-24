@@ -6,6 +6,7 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        req.user = decoded;
     } catch (err) {
         return res.status(400).send('Invalid token')
     }
