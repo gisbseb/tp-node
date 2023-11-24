@@ -11,9 +11,12 @@ const login = async (req, res) => {
 
   let existingUser = await User.findOne({ email, password: hashedPwd });
   if (!existingUser) {
-    return res.redirect("/login", 403, {
-      message: "Invalid credentials",
-    });
+      req.session.flash = {
+        class: "failed",
+        message: "Identifiants invalide",
+      };
+      return res.redirect("/login");
+  
   }
 
   if (!existingUser.token) {
