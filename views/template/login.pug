@@ -7,14 +7,46 @@ block content
 
     div.form-container
         h1 Connexion
-        form(action="/login" method="post")
+        form#login-form(action="/login" method="post")
         
             div.form-group
-                label(for="email") Email :
+                label(for="email") Email : 
                 input(type="text" id="email" name="email" )
+                p#err-email(class="err-msg") 
             
             div.form-group
                 label(for="password") Mot de passe :
                 input(type="password" id="password" name="password" )
+                p#err-password(class="err-msg") 
             
             input(type="submit" value="Envoyer" class="custom-btn")
+
+    script.
+        const form = document.querySelector('#login-form')
+        const inputEmail = document.querySelector('#email')
+        const inputPassword = document.querySelector('#password')
+        let emailErr=document.querySelector('#err-email')
+        let pwdErr=document.querySelector('#err-password')
+    
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault()
+            let isError = false
+          
+            if(!inputPassword.value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)){
+            pwdErr.innerHTML ="Mot de passe non conforme"
+                isError = true
+            }else{
+                pwdErr.innerHTML =''
+            }
+             if(!inputEmail.value.match(/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/)){
+                emailErr.innerHTML ="Veuillez saisir une adresse mail valide"
+                isError = true
+            }else{
+                emailErr.innerHTML =''
+            }
+
+            if(!isError){
+            form.submit()
+            }
+        })
+       

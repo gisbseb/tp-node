@@ -7,24 +7,82 @@ block content
 
     div.form-container
         h1 Inscription
-        form#register-form(action="/register/user" method="post" )
+        form#register-form(action="/register" method="post" )
             
             div.form-group
                 label(for="email") Email :
                 input(type="text" id="email" name="email" )
+                p#err-email(class="err-msg") 
             div.form-group-container
                 div.form-group
                     label(for="password") Mot de passe :
                     input(type="password" id="password" name="password" )
+                    p#err-password(class="err-msg ") 
                 div.form-group
                     label(for="confirm-password") Confirmer le mot de passe :
                     input(type="password" id="confirm-password" name="confirm-password" )
+                    p#err-confirm-password(class="err-msg err-confirm-password") 
             div.form-group-container
                 div.form-group
                     label(for="firstname")  Nom :
-                    input(type="text" id="firstname" name="firstname" )
+                    input(type="text" id="firstname" name="firstName" )
+                    p#err-firstname(class="err-msg ") 
                 div.form-group
                     label(for="lastname")  Prénom :
-                    input(type="text" id="lastname" name="lastname" )
+                    input(type="text" id="lastname" name="lastName" )
+                    p#err-lastname(class="err-msg ") 
             
             input(type="submit" value="S'inscrire" class="custom-btn")
+
+    script.
+        const form = document.querySelector('#register-form')
+        const inputEmail = document.querySelector('#email')
+        const inputPassword = document.querySelector('#password')
+        const inputConfirmPassword = document.querySelector('#confirm-password')
+        const inputLastname = document.querySelector('#lastname')
+        const inputFirstname = document.querySelector('#firstname')
+        let emailErr=document.querySelector('#err-email')
+        let pwdErr=document.querySelector('#err-password')
+        let confirmPwdErr=document.querySelector('#err-confirm-password')
+        let lastnameErr=document.querySelector('#err-lastname')
+        let firstnameErr=document.querySelector('#err-firstname')
+    
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault()
+            let isError = false
+          
+            if(!inputPassword.value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)){
+                pwdErr.innerHTML ="Au moins 8 caractères, une lettre et un chiffre"
+                isError = true
+            }else{
+                pwdErr.innerHTML =''
+            }
+            if (inputPassword.value !== inputConfirmPassword.value) {
+                confirmPwdErr.innerHTML = "Les mots de passe ne correspondent pas";
+                isError = true;
+            } else {
+                confirmPwdErr.innerHTML = '';
+            }
+             if(!inputEmail.value.match(/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/)){
+                emailErr.innerHTML ="Veuillez saisir une adresse mail valide"
+                isError = true
+            }else{
+                emailErr.innerHTML =''
+            }
+            if(!inputFirstname.value.match(/^[A-Za-zÀ-ÖØ-öø-ÿ\s-]+$/)){
+                firstnameErr.innerHTML ="Veuillez saisir un nom valide"
+                isError = true
+            }else{
+                firstnameErr.innerHTML =''
+            }
+             if(!inputLastname.value.match(/^[A-Za-zÀ-ÖØ-öø-ÿ\s-]+$/)){
+                lastnameErr.innerHTML ="Veuillez saisir un prénom valide"
+                isError = true
+            }else{
+                lastnameErr.innerHTML =''
+            }
+            if(!isError){
+            form.submit()
+            }
+        })
+       
