@@ -22,6 +22,12 @@ h1 {
 .form-group-container {
   display: flex;
   gap: 0 2em;
+  position: relative;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5em;
 }
 .form-container {
   display: flex;
@@ -62,4 +68,11 @@ input.custom-btn {
 
 .custom-btn:hover {
   opacity: 0.5;
+}
+
+.err-msg {
+  position: absolute;
+  color: red;
+  top: 100%;
+  font-size: 0.7em;
 }
