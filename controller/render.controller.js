@@ -4,7 +4,7 @@ const loginRender = async (req, res) => {
   });
 };
 const dashboardRender = async (req, res) => {
-  res.render("template/dashboard", { title: "Dashboard" });
+  res.render("template/dashboard", { title: "Dashboard", username : req.session.user.firstName });
 };
 const registerRender = async (req, res) => {
   res.render("template/register", {

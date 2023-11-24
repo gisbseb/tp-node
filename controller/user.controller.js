@@ -34,7 +34,6 @@ const login = async (req, res) => {
 
     return res.redirect("/dashboard", 200, {
         message: "Welcome " + existingUser.firstName,
-        token: existingUser.token
     });
 };
 const find = async (req, res) => {
