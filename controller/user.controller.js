@@ -3,9 +3,8 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-dotenv.config();
-
-const login = async (req, res) => { 
+dotenv.config
+const login = async (req, res) => {
     const { email, password } = req.body;
     const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
     const hashedPwd = sha256Hasher.update(password).digest("hex");
@@ -17,47 +16,48 @@ const login = async (req, res) => {
         });
     }
 
-    if(!existingUser.token){
+    if (!existingUser.token) {
         const token = jwt.sign({ email }, process.env.JWT_SECRET);
         existingUser.token = token;
         await existingUser.save();
     } else {
         jwt.verify(existingUser.token, process.env.JWT_SECRET, async (err, decoded) => {
-            if(err){
+            if (err) {
                 const token = jwt.sign({ email }, process.env.JWT_SECRET);
                 existingUser.token = token;
                 await existingUser.save();
             }
         });
     }
-    
+
     req.session.user = existingUser;
 
     return res.redirect("/dashboard", 200, {
         message: "Welcome " + existingUser.firstName,
-        token : existingUser.token
+        token: existingUser.token
     });
 };
 const find = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.send(users);
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || "Some error occurred while retrieving users.",
-    });
-  }
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving users.",
+        });
+    }
 };
 const create = async (req, res) => {
-  try {
-    const { email, password, lastName, firstName } = req.body;
+    try {
+        const { email, password, lastName, firstName } = req.body;
 
-    let existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.render("template/register", {
-        title: "Inscription",
-        flash: { class: "Failed", message: "L'utilisateur existe déja" },
-      });
+        let existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.render("template/register", {
+                title: "Inscription",
+                flash: { class: "Failed", message: "L'utilisateur existe déja" },
+            });
+        }
 
         const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
         const hashedPwd = sha256Hasher.update(password).digest("hex");
@@ -71,27 +71,11 @@ const create = async (req, res) => {
         res.redirect("/login");
     } catch (err) {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the User."
+            message: err.message || "Some error occurred while creating the User.",
         });
     }
-
-    const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
-    const hashedPwd = sha256Hasher.update(password).digest("hex");
-    await User.create({
-      email,
-      password: hashedPwd,
-      lastName,
-      firstName,
-    });
-
-    res.redirect("/login");
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || "Some error occurred while creating the User.",
-    });
-  }
 };
-const update = async (req, res) => {};
-const remove = async (req, res) => {};
+const update = async (req, res) => { };
+const remove = async (req, res) => { };
 
 export default { login, find, create, update, remove };
