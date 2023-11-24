@@ -35,8 +35,9 @@ const create = async (req, res) => {
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).send({
-        message: "User already exists",
+      return res.render("template/register", {
+        title: "Inscription",
+        flash: { class: "Failed", message: "L'utilisateur existe déja" },
       });
     }
 

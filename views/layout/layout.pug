@@ -18,15 +18,13 @@ html(lang=fr)
         div#flash-container
             div#flash-message(class=`${flash.class}`)
                 p #{flash.message}
-
   
     script.
         let flash = document.querySelector('#flash-message')
         if(flash){
-        setTimeout(() =>{
-            flash.parentNode.removeChild(flash);
-        },5000)
-
+            setTimeout(() =>{
+                flash.parentNode.removeChild(flash);
+            },5000)
         }
 
     footer 
