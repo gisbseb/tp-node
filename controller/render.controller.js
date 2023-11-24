@@ -1,8 +1,7 @@
 const getFlash = (req) => {
-  if (req.session && req.sesion.flash) {
+  if (req.session && req.session.flash) {
     let flash = req.session.flash;
     delete req.session.flash;
-
     return flash;
   }
 };
