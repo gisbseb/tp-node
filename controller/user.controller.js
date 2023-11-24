@@ -1,23 +1,45 @@
 import { User } from "../model/user.model.js";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
-dotenv.config();
-
+dotenv.config;
 const login = async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
   const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
   const hashedPwd = sha256Hasher.update(password).digest("hex");
 
   let existingUser = await User.findOne({ email, password: hashedPwd });
   if (!existingUser) {
-    return res.status(401).send({
+    return res.redirect("/login", 403, {
       message: "Invalid credentials",
     });
   }
 
-  return res.redirect("/dashboard");
+  if (!existingUser.token) {
+    const token = jwt.sign({ email }, process.env.JWT_SECRET);
+    existingUser.token = token;
+    await existingUser.save();
+  } else {
+    jwt.verify(
+      existingUser.token,
+      process.env.JWT_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          const token = jwt.sign({ email }, process.env.JWT_SECRET);
+          existingUser.token = token;
+          await existingUser.save();
+        }
+      }
+    );
+  }
+
+  req.session.user = existingUser;
+
+  return res.redirect("/dashboard", 200, {
+    message: "Welcome " + existingUser.firstName,
+    token: existingUser.token,
+  });
 };
 const find = async (req, res) => {
   try {
@@ -35,11 +57,10 @@ const create = async (req, res) => {
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      req.session.flash = {
-        class: "failed",
-        message: "l'utilisateur existe déja",
-      };
-      return res.redirect("/");
+      return res.render("template/register", {
+        title: "Inscription",
+        flash: { class: "Failed", message: "L'utilisateur existe déja" },
+      });
     }
 
     const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
