@@ -1,10 +1,17 @@
 import crypto from "crypto";
 import dotenv from "dotenv";
 import { User } from "../model/user.model.js";
+
 dotenv.config();
 
 const renderRegisterForm = (req, res) => {
-  res.render("template/register", { title: "Inscription" });
+  res.render("template/register", {
+    title: "Inscription",
+    flash: {
+      class: "success",
+      message: "Bienvenu",
+    },
+  });
 };
 
 const renderLoginForm = (req, res) => {
@@ -21,7 +28,7 @@ const register = async (req, res) => {
 
   const sha256Hasher = crypto.createHmac("sha256", process.env.SECRET_HASH);
   const hashedPwd = sha256Hasher.update(password).digest("hex");
-  console.log(hashedPwd);
+
   await User.create({
     email,
     password: hashedPwd,
@@ -29,8 +36,6 @@ const register = async (req, res) => {
     firstName,
   });
 
-  const foundUser = await User.findOne({}, {});
-  console.log(foundUser);
   res.redirect("/connexion");
 };
 
