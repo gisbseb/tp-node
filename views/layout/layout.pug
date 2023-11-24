@@ -1,0 +1,14 @@
+html(lang=fr)
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title= title || 'Blog'
+        link(rel="stylesheet" href="/assets/css/bootstrap.css")
+        link(rel="stylesheet" href="assets/css/style.css")
+
+    body
+        block header
+        block content
+
+    footer 
+        p mon footer

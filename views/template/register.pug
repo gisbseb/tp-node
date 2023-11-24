@@ -1,0 +1,30 @@
+extend ../layout/layout
+
+block header
+    include  ../parts/header.pug
+block content 
+
+
+    div.form-container
+        h1 Inscription
+        form#register-form(action="/register/user" method="post" )
+            
+            div.form-group
+                label(for="email") Email :
+                input(type="text" id="email" name="email" )
+            div.form-group-container
+                div.form-group
+                    label(for="password") Mot de passe :
+                    input(type="password" id="password" name="password" )
+                div.form-group
+                    label(for="confirm-password") Confirmer le mot de passe :
+                    input(type="password" id="confirm-password" name="confirm-password" )
+            div.form-group-container
+                div.form-group
+                    label(for="firstname")  Nom :
+                    input(type="text" id="firstname" name="firstname" )
+                div.form-group
+                    label(for="lastname")  Prénom :
+                    input(type="text" id="lastname" name="lastname" )
+            
+            input(type="submit" value="S'inscrire" class="custom-btn")
