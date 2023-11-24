@@ -1,20 +1,12 @@
 import express from "express"
+import controller from "../controller/render.controller.js"
 
 export default function (app) {
     const router = express.Router()
 
-    router.get("/", (req, res) => {
-        res.render("template/register", { title: "Inscription" });
-    });
-
-    router.get("/login", (req, res) => {
-        res.render("template/login", { title: "Connexion" });
-    });
-
-    router.get("/dashboard", (req, res) => {
-        res.render("template/dashboard", { title: "Dashboard" });
-    });
-
-
+    router.get('/login', controller.loginRender)
+    router.get('/dashboard', controller.dashboardRender)
+    router.get('/', controller.registerRender)
+    
     app.use('/', router);
 }
